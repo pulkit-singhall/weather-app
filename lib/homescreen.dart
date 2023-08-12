@@ -1,9 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:weather_app/additional_data.dart';
+import 'package:weather_app/secrets.dart';
 import 'hourly_card_item.dart';
+import 'package:http/http.dart' as http;
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+
+  @override
+  void initState() {
+    super.initState();
+    getWeatherData();
+  }
+  // fetching data from web
+  Future getWeatherData() async {
+    String city = "Delhi";
+    String country = "india";
+    // using get command
+    String url = "https://api.openweathermap.org/data/2.5/weather?q=$city,$country&APPID=$WeatherApiId";
+    final res = await http.get(Uri.parse(url,),);
+    print(res.body);
+  }
 
   @override
   Widget build(BuildContext context) {
