@@ -22,7 +22,7 @@ class AdditionalDetail extends StatelessWidget {
           Icon(
             icon,
             size: 45,
-            color: const Color.fromARGB(255, 91, 90, 90),
+            color: const Color.fromARGB(255, 53, 52, 52),
           ),
           const SizedBox(
             height: 8,
@@ -30,7 +30,7 @@ class AdditionalDetail extends StatelessWidget {
           Text(
             measure,
             style:
-                const TextStyle(fontSize: 22, color: Color.fromARGB(255, 91, 90, 90)),
+                const TextStyle(fontSize: 22, color: Color.fromARGB(255, 53, 52, 52)),
           ),
           const SizedBox(
             height: 8,
@@ -38,7 +38,7 @@ class AdditionalDetail extends StatelessWidget {
           Text(
             value,
             style:
-                const TextStyle(fontSize: 25, color: Color.fromARGB(255, 91, 90, 90)),
+                const TextStyle(fontSize: 25, color: Color.fromARGB(255, 53, 52, 52)),
           ),
         ],
       ),

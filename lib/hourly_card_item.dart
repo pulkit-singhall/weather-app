@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class HourlyCard extends StatelessWidget {
   // constructor
   final String temp;
-  final IconData icon;
+  final icon;
   final String time;
 
   const HourlyCard({super.key,
@@ -28,7 +28,7 @@ class HourlyCard extends StatelessWidget {
               Text(
                 temp,
                 style: const TextStyle(
-                    color: Color.fromARGB(255, 91, 90, 90),
+                    color: Color.fromARGB(255, 53, 52, 52),
                     fontSize: 28,
                     fontWeight: FontWeight.w500),
               ),
@@ -37,7 +37,7 @@ class HourlyCard extends StatelessWidget {
               ),
               Icon(
                 icon,
-                color: const Color.fromARGB(255, 91, 90, 90),
+                  color: const Color.fromARGB(255, 53, 52, 52),
                 size: 40,
               ),
               const SizedBox(
@@ -46,7 +46,7 @@ class HourlyCard extends StatelessWidget {
               Text(
                 time,
                 style: const TextStyle(
-                    color: Color.fromARGB(255, 91, 90, 90),
+                    color: Color.fromARGB(255, 53, 52, 52),
                     fontSize: 25,
                     fontWeight: FontWeight.w400),
               ),

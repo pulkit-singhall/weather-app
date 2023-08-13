@@ -14,11 +14,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  @override
-  void initState() {
-    super.initState();
-    getWeatherData();
-  }
 
   // fetching data from web
   Future<Map<String,dynamic>> getWeatherData() async {
@@ -59,7 +54,11 @@ class _HomeScreenState extends State<HomeScreen> {
         backgroundColor: Colors.red,
         toolbarHeight: 60,
         actions: [
-          IconButton(onPressed: () {}, icon: const Icon(Icons.refresh)),
+          IconButton(onPressed: () {
+            setState(() {
+              // for refresh
+            });
+          }, icon: const Icon(Icons.refresh)),
         ],
       ),
       body: FutureBuilder(
@@ -78,6 +77,19 @@ class _HomeScreenState extends State<HomeScreen> {
           // data values
           final data=snapshot.data!;
           final currentTemp = data["list"][0]["main"]["temp"];
+          final String display = data["list"][0]["weather"][0]["main"];
+          final String description = data["list"][0]["weather"][0]["description"];
+          final windSpeed = data["list"][0]["wind"]["speed"].toString();
+          final pressure = data["list"][0]["main"]["pressure"].toString();
+          final humidity = data["list"][0]["main"]["humidity"].toString();
+          final visibility = data["list"][0]["visibility"].toString();
+
+          final iconDisplay = {
+            "Clouds" : Icons.cloud,
+            "Rain" : Icons.water,
+            "Clear" : Icons.sunny,
+          };
+
 
           return Padding(
             padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 12),
@@ -107,17 +119,17 @@ class _HomeScreenState extends State<HomeScreen> {
                           const SizedBox(
                             height: 8,
                           ),
-                          const Icon(
-                            Icons.cloud,
+                          Icon(
+                            iconDisplay[display],
                             size: 50,
-                            color: Color.fromARGB(255, 53, 52, 52),
+                            color: const Color.fromARGB(255, 53, 52, 52),
                           ),
                           const SizedBox(
                             height: 8,
                           ),
-                          const Text(
-                            "Rain",
-                            style: TextStyle(
+                          Text(
+                            description,
+                            style: const TextStyle(
                               fontWeight: FontWeight.w600,
                               fontSize: 25,
                               color: Color.fromARGB(255, 53, 52, 52),
@@ -139,46 +151,23 @@ class _HomeScreenState extends State<HomeScreen> {
                     style: TextStyle(
                       fontSize: 28,
                       fontWeight: FontWeight.bold,
+                      color: Colors.red,
                     ),
                   ),
                 ),
                 const SizedBox(
                   height: 16,
                 ),
-                const SingleChildScrollView(
+                SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
                   child: Row(
                     children: [
-                      HourlyCard(
-                        temp: "150 K",
-                        icon: Icons.cloud,
-                        time: "9:00",
-                      ),
-                      HourlyCard(
-                        temp: "130 K",
-                        icon: Icons.cloud,
-                        time: "10:00",
-                      ),
-                      HourlyCard(
-                        temp: "145 K",
-                        icon: Icons.cloud,
-                        time: "11:00",
-                      ),
-                      HourlyCard(
-                        temp: "165 K",
-                        icon: Icons.sunny,
-                        time: "12:00",
-                      ),
-                      HourlyCard(
-                        temp: "175 K",
-                        icon: Icons.sunny,
-                        time: "1:00",
-                      ),
-                      HourlyCard(
-                        temp: "132 K",
-                        icon: Icons.cloud,
-                        time: "2:00",
-                      ),
+                      // list view type
+                      for(int i=1; i<=15; i++)
+                        HourlyCard(
+                            temp: data["list"][i]["main"]["temp"].toString(),
+                            icon: iconDisplay[data['list'][i]['weather'][0]['main'].toString()],
+                            time: "9:00"),
                     ],
                   ),
                 ),
@@ -191,7 +180,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: Text(
                     "Additional Information",
                     style: TextStyle(
-                        color: Colors.black,
+                        color: Colors.red,
                         fontSize: 28,
                         fontWeight: FontWeight.bold),
                   ),
@@ -200,26 +189,39 @@ class _HomeScreenState extends State<HomeScreen> {
                   height: 14,
                 ),
                 // details
-                const Row(
+                Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     AdditionalDetail(
                       icon: Icons.water_drop,
                       measure: "Humidity",
-                      value: "94",
+                      value: humidity,
                     ),
                     AdditionalDetail(
                       icon: Icons.air,
                       measure: "Wind Speed",
-                      value: "11",
+                      value: windSpeed,
+                    ),
+                  ],
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    AdditionalDetail(
+                      icon: Icons.visibility,
+                      measure: "Visibility",
+                      value: visibility,
                     ),
                     AdditionalDetail(
                       icon: Icons.shutter_speed,
                       measure: "Pressure",
-                      value: "1209",
+                      value: pressure,
                     ),
                   ],
-                )
+                ),
               ],
             ),
           );
