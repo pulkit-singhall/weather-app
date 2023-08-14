@@ -1,6 +1,6 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:weather_app/additional_data.dart';
 import 'package:weather_app/secrets.dart';
 import 'hourly_card_item.dart';
@@ -17,7 +17,7 @@ class _HomeScreenState extends State<HomeScreen> {
   // fetching data from web
   Future<Map<String, dynamic>> getWeatherData() async {
     try {
-      String city = "Delhi";
+      String city = "Lucknow";
       String country = "india";
       // using get command
       String url =
@@ -164,11 +164,15 @@ class _HomeScreenState extends State<HomeScreen> {
                   height: 150,
                   child: ListView.builder(
                     scrollDirection: Axis.horizontal,
-                      itemCount: 10, itemBuilder: (context, index) {
+                      itemCount: 30, itemBuilder: (context, index) {
+                      // time
+                      final String timeRaw = data['list'][index+1]['dt_txt'];
+                      final time = DateTime.parse(timeRaw);
                         return HourlyCard(
                             temp: data["list"][index+1]["main"]["temp"].toString(),
                             icon: iconDisplay[data["list"][index+1]["weather"][0]["main"]],
-                            time: "9:00");
+                            time: DateFormat.Hm().format(time)
+                        );
                   }),
                 ),
                 const SizedBox(

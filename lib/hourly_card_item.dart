@@ -17,6 +17,7 @@ class HourlyCard extends StatelessWidget {
     return SizedBox(
       width: 130,
       child: Card(
+        surfaceTintColor: Colors.white,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12),
         ),
