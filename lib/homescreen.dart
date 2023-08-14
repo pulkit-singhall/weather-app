@@ -14,9 +14,8 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-
   // fetching data from web
-  Future<Map<String,dynamic>> getWeatherData() async {
+  Future<Map<String, dynamic>> getWeatherData() async {
     try {
       String city = "Delhi";
       String country = "india";
@@ -54,11 +53,13 @@ class _HomeScreenState extends State<HomeScreen> {
         backgroundColor: Colors.red,
         toolbarHeight: 60,
         actions: [
-          IconButton(onPressed: () {
-            setState(() {
-              // for refresh
-            });
-          }, icon: const Icon(Icons.refresh)),
+          IconButton(
+              onPressed: () {
+                setState(() {
+                  // for refresh
+                });
+              },
+              icon: const Icon(Icons.refresh)),
         ],
       ),
       body: FutureBuilder(
@@ -75,21 +76,22 @@ class _HomeScreenState extends State<HomeScreen> {
           }
 
           // data values
-          final data=snapshot.data!;
-          final currentTemp = data["list"][0]["main"]["temp"];
+          final data = snapshot.data!;
+          final currentTemp = data["list"][0]["main"]["temp"].toString();
           final String display = data["list"][0]["weather"][0]["main"];
-          final String description = data["list"][0]["weather"][0]["description"];
+          final String description =
+              data["list"][0]["weather"][0]["description"];
           final windSpeed = data["list"][0]["wind"]["speed"].toString();
           final pressure = data["list"][0]["main"]["pressure"].toString();
           final humidity = data["list"][0]["main"]["humidity"].toString();
           final visibility = data["list"][0]["visibility"].toString();
 
+          // map for icons
           final iconDisplay = {
-            "Clouds" : Icons.cloud,
-            "Rain" : Icons.water,
-            "Clear" : Icons.sunny,
+            "Clouds": Icons.cloud,
+            "Rain": Icons.water,
+            "Clear": Icons.sunny,
           };
-
 
           return Padding(
             padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 12),
@@ -111,7 +113,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         children: [
                           Text(
                             "$currentTemp K",
-                            style:const  TextStyle(
+                            style: const TextStyle(
                                 fontWeight: FontWeight.w600,
                                 fontSize: 32,
                                 color: Color.fromARGB(255, 53, 52, 52)),
@@ -158,18 +160,16 @@ class _HomeScreenState extends State<HomeScreen> {
                 const SizedBox(
                   height: 16,
                 ),
-                SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Row(
-                    children: [
-                      // list view type
-                      for(int i=1; i<=15; i++)
-                        HourlyCard(
-                            temp: data["list"][i]["main"]["temp"].toString(),
-                            icon: iconDisplay[data['list'][i]['weather'][0]['main'].toString()],
-                            time: "9:00"),
-                    ],
-                  ),
+                SizedBox(
+                  height: 150,
+                  child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                      itemCount: 10, itemBuilder: (context, index) {
+                        return HourlyCard(
+                            temp: data["list"][index+1]["main"]["temp"].toString(),
+                            icon: iconDisplay[data["list"][index+1]["weather"][0]["main"]],
+                            time: "9:00");
+                  }),
                 ),
                 const SizedBox(
                   height: 20,

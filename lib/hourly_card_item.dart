@@ -24,6 +24,7 @@ class HourlyCard extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 12.0),
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Text(
                 temp,
@@ -31,6 +32,7 @@ class HourlyCard extends StatelessWidget {
                     color: Color.fromARGB(255, 53, 52, 52),
                     fontSize: 28,
                     fontWeight: FontWeight.w500),
+                maxLines: 1,
               ),
               const SizedBox(
                 height: 5,
