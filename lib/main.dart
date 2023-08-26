@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:weather_app/homescreen.dart';
+import 'package:weather_app/preference.dart';
 
 void main(){
   runApp(const MyApp());
@@ -12,10 +13,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: "Weather App",
-      home: const HomeScreen(),
+      home: const Preference(),
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.red),
       ),
     );
   }
