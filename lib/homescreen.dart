@@ -69,6 +69,7 @@ class _HomeScreenState extends State<HomeScreen> {
               onPressed: () {
                 setState(() {
                   // for refresh
+                  weatherData = getWeatherData(widget.city, widget.country);
                 });
               },
               icon: const Icon(Icons.refresh)),
