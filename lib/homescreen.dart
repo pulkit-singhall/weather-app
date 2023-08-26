@@ -7,18 +7,24 @@ import 'hourly_card_item.dart';
 import 'package:http/http.dart' as http;
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+  // parameters
+  final String city;
+  final String country;
+
+  const HomeScreen({super.key, required this.city, required this.country});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  // parameter
+  late Future<Map<String, dynamic>> weatherData;
+
   // fetching data from web
-  Future<Map<String, dynamic>> getWeatherData() async {
+  Future<Map<String, dynamic>> getWeatherData(
+      String city, String country) async {
     try {
-      String city = "Lucknow";
-      String country = "india";
       // using get command
       String url =
           "https://api.openweathermap.org/data/2.5/forecast?q=$city,$country&APPID=$WeatherApiId";
@@ -37,6 +43,12 @@ class _HomeScreenState extends State<HomeScreen> {
     } catch (e) {
       throw e.toString();
     }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    weatherData = getWeatherData(widget.city, widget.country);
   }
 
   @override
@@ -63,7 +75,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
       ),
       body: FutureBuilder(
-        future: getWeatherData(),
+        future: weatherData,
         builder: (context, snapshot) {
           // snapshot gives all the states in flutter
           // loading data
@@ -163,17 +175,20 @@ class _HomeScreenState extends State<HomeScreen> {
                 SizedBox(
                   height: 150,
                   child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                      itemCount: 30, itemBuilder: (context, index) {
-                      // time
-                      final String timeRaw = data['list'][index+1]['dt_txt'];
-                      final time = DateTime.parse(timeRaw);
+                      scrollDirection: Axis.horizontal,
+                      itemCount: 30,
+                      itemBuilder: (context, index) {
+                        // time
+                        final String timeRaw =
+                            data['list'][index + 1]['dt_txt'];
+                        final time = DateTime.parse(timeRaw);
                         return HourlyCard(
-                            temp: data["list"][index+1]["main"]["temp"].toString(),
-                            icon: iconDisplay[data["list"][index+1]["weather"][0]["main"]],
-                            time: DateFormat.Hm().format(time)
-                        );
-                  }),
+                            temp: data["list"][index + 1]["main"]["temp"]
+                                .toString(),
+                            icon: iconDisplay[data["list"][index + 1]["weather"]
+                                [0]["main"]],
+                            time: DateFormat.Hm().format(time));
+                      }),
                 ),
                 const SizedBox(
                   height: 20,

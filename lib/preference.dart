@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:weather_app/homescreen.dart';
 
 class Preference extends StatelessWidget {
   const Preference({super.key});
@@ -77,12 +78,19 @@ class Preference extends StatelessWidget {
                 height: 70,
               ),
               ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  // action of navigation
+                  final citySearch = city.text.toString();
+                  final countrySearch = country.text.toString();
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    return HomeScreen(city: citySearch, country: countrySearch);
+                  }));
+                },
                 style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all(Colors.red),
                   elevation: MaterialStateProperty.all(3.0),
-                  fixedSize: MaterialStateProperty.all<Size>(const Size(140,45)),
-
+                  fixedSize:
+                      MaterialStateProperty.all<Size>(const Size(140, 45)),
                 ),
                 child: const Text(
                   "Check",
